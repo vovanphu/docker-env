@@ -4,7 +4,7 @@ services:
 
   mysql-service:
     image: mysql
-    command:  --default-authentication-plugin=mysql_native_password --skip-name-resolve
+    command: --default-authentication-plugin=mysql_native_password --skip-name-resolve
     environment:
       MYSQL_ROOT_PASSWORD: mysql-service
     volumes:
@@ -14,21 +14,21 @@ services:
       - 3306:3306
     restart: always
     networks:
-      - service-net
+      - net-service
 
-  pma-service:
-    image: phpmyadmin
-    environment:
-      PMA_HOST: mysql-service
-      MYSQL_USER: root
-      MYSQL_PASSWORD: mysql-service
-    ports:
-      - 8080:80
-    restart: always
-    depends_on:
-      - mysql-service
-    networks:
-      - service-net
+  # pma-service:
+  #   image: phpmyadmin
+  #   environment:
+  #     PMA_HOST: mysql-service
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: mysql-service
+  #   ports:
+  #     - 8080:80
+  #   restart: always
+  #   depends_on:
+  #     - mysql-service
+  #   networks:
+  #     - net-service
 
   rabbitmq-service:
     image: rabbitmq
@@ -41,7 +41,7 @@ services:
     ports:
       - 5672:5672
     networks:
-      - service-net
+      - net-service
 
   redis-service:
     image: redis
@@ -51,7 +51,7 @@ services:
       - 6379:6379
     restart: always
     networks:
-      - service-net
+      - net-service
 
 volumes:
   mysql-data:
@@ -59,6 +59,6 @@ volumes:
   redis-data:
 
 networks:
-  service-net:
+  net-service:
     driver: bridge
   
